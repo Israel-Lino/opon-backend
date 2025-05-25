@@ -17,12 +17,14 @@ API desenvolvida em Java com Spring Boot para gerenciamento de solicitações de
 - Maven
 - Banco de dados local configurado (futuramente remoto)
 
-### Passos:
+## Passos:
 
+### Clone o repositório
 ```bash
-# Clone o repositório
 git clone https://github.com/gabrielleiteleal/opon-backend.git
 cd opon-backend
+```
 
-# Execute o projeto
+### Execute o projeto
+```bash
 mvn spring-boot:run

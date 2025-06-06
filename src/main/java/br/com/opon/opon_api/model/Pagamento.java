@@ -1,10 +1,11 @@
-package br.com.opon.opon_api.entities;
+package br.com.opon.opon_api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -15,23 +16,24 @@ import java.time.Instant;
 @Table(name = "pagamento")
 public class Pagamento {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pagamento", nullable = false)
-    private Integer id;
+    private Integer idPagamento;
 
     @NotNull
     @Column(name = "valor", nullable = false, precision = 10, scale = 2)
-    private BigDecimal valor;
+    private BigDecimal valorPagamento;
 
     @NotNull
     @Lob
     @Column(name = "metodo", nullable = false)
-    private String metodo;
+    private String metodoPagamento;
 
     @NotNull
     @ColumnDefault("(_utf8mb4'Pendente')")
     @Lob
-    @Column(name = "status_pag", nullable = false)
-    private String statusPag;
+    @Column(name = "status", nullable = false)
+    private String statusPagamento;
 
     @Column(name = "data_pagamento")
     private Instant dataPagamento;
@@ -39,7 +41,7 @@ public class Pagamento {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_servico", nullable = false)
-    private br.com.opon.opon_api.entities.Servico fkServico;
+    private br.com.opon.opon_api.model.Servico fkServico;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -49,6 +51,6 @@ public class Pagamento {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_profissional", nullable = false)
-    private br.com.opon.opon_api.entities.Profissional fkProfissional;
+    private br.com.opon.opon_api.model.Profissional fkProfissional;
 
 }

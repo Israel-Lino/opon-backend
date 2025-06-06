@@ -1,4 +1,4 @@
-package br.com.opon.opon_api.entities;
+package br.com.opon.opon_api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,8 +15,9 @@ import java.time.Instant;
 @Table(name = "servico")
 public class Servico {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servico", nullable = false)
-    private Integer id;
+    private Integer idServico;
 
     @Size(max = 255)
     @Column(name = "titulo")
@@ -35,8 +36,8 @@ public class Servico {
     @NotNull
     @ColumnDefault("(_utf8mb4'Pedente')")
     @Lob
-    @Column(name = "status_ser", nullable = false)
-    private String statusSer;
+    @Column(name = "status", nullable = false)
+    private String statusServico;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_solicitada")

@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -41,10 +41,10 @@ public class Servico {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_solicitada")
-    private Instant dataSolicitada;
+    private LocalDateTime dataSolicitada;
 
     @Column(name = "data_conclusao")
-    private Instant dataConclusao;
+    private LocalDateTime dataConclusao;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

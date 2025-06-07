@@ -6,10 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -50,5 +49,5 @@ public class Cliente {
 
     @Column(name = "data_cadastro")
     @ColumnDefault("CURRENT_TIMESTAMP")
-    private Instant dataCadastro;
+    private LocalDateTime dataCadastro;
 }

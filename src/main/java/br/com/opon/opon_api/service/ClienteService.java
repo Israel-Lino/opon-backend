@@ -1,16 +1,18 @@
 package br.com.opon.opon_api.service;
 
+import br.com.opon.opon_api.exceptions.ClienteNaoEncontradoException;
+import br.com.opon.opon_api.exceptions.EmailJaCadastradoException;
 import br.com.opon.opon_api.model.Cliente;
 import br.com.opon.opon_api.repository.ICliente;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClienteService {
+
 
     private final ICliente repository;
     //Adicionar BCrypt
@@ -23,40 +25,39 @@ public class ClienteService {
         return repository.findAll();
     }
 
+    public Cliente buscarCliente(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado. Id:" + id + " /Service"));
+    }
+
     public Cliente criarCliente(Cliente cliente) {
-        cliente.setDataCadastro(Instant.now());
+        validarEmailCliente(cliente.getEmail());
+        cliente.setDataCadastro(dataAtual());
         return repository.save(cliente);
     }
 
-    public Cliente editarCliente(Cliente cliente) {
-        Cliente novoCliente = buscarPorEmail(cliente.getEmail());
-        novoCliente.setIdCliente(cliente.getIdCliente());
-        novoCliente.setDataCadastro(Instant.now());
-        return repository.save(novoCliente);
+    public Cliente editarCliente(Cliente clienteEditado, Integer id) {
+        Cliente clienteAtual = repository.findById(id).orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado. Id:" + id + " /Service"));
+        clienteAtual.setNome(clienteEditado.getNome());
+        clienteAtual.setTelefone(clienteEditado.getTelefone());
+        clienteAtual.setEndereco(clienteEditado.getEndereco());
+        return repository.save(clienteAtual);
     }
 
-    public Boolean excluirCliente(Integer id) {
-        repository.deleteById(id);
-        return true;
-    }
-
-    public Boolean validarCliente(String email, String senha) {
-        //Terminar validação após adicionar BCrypt
-        Optional<Cliente> clienteOptional = repository.findByEmail(email);
-        if (clienteOptional.isPresent()) {
-            if (senha.equals(clienteOptional.get().getSenha())) {
-                return true;
-            }
+    public void excluirCliente(Integer id) {
+        if(!repository.existsById(id)){
+            throw new ClienteNaoEncontradoException("Cliente não encontrado. Id:" + id + " /Service");
         }
-        return false;
+        repository.deleteById(id);
     }
 
-    public Cliente buscarPorEmail(String email) {
-        return repository.findByEmail(email).orElse(new Cliente());
+    public void validarEmailCliente(String email) {
+        if (repository.existsByEmail(email)) {
+            throw new EmailJaCadastradoException("E-mail já cadastrado");
+        }
     }
 
-    public Cliente buscarPorId(Integer id) {
-        return repository.findById(id).orElse(new Cliente());
+    public LocalDateTime dataAtual(){
+        return LocalDateTime.now(ZoneId.of("America/Sao_Paulo"));
     }
 
 }

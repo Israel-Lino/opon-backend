@@ -8,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -36,7 +36,7 @@ public class Pagamento {
     private String statusPagamento;
 
     @Column(name = "data_pagamento")
-    private Instant dataPagamento;
+    private LocalDateTime dataPagamento;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

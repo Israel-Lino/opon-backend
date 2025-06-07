@@ -8,7 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,7 +29,7 @@ public class Avaliacao {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_avaliacao")
-    private Instant dataAvaliacao;
+    private LocalDateTime dataAvaliacao;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

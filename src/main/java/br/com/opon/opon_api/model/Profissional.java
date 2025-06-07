@@ -9,7 +9,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -55,7 +55,7 @@ public class Profissional {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_cadastro")
-    private Instant dataCadastro;
+    private LocalDateTime dataCadastro;
 
     @ColumnDefault("1.0")
     @Column(name = "avaliacao", precision = 2, scale = 1)

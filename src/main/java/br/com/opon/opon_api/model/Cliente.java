@@ -1,102 +1,51 @@
 package br.com.opon.opon_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
-import java.util.Date;
+import java.time.Instant;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "cliente")
+@Table(name = "cliente", uniqueConstraints = {
+        @UniqueConstraint(name = "email", columnNames = {"email"})
+})
 public class Cliente {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_cliente")
-    private int id_tarefa;
+    @Column(name = "id_cliente", nullable = false)
+    private Integer id;
 
-    @Column(name = "nome", length = 100, nullable = false)
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Column(name = "email", length = 100, nullable = false, unique = true)
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Column(name = "senha", length = 255, nullable = false)
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "senha", nullable = false, length = 100)
     private String senha;
 
-    @Column(name = "teledone", length = 20)
-    private String telefone;
+    @Size(max = 20)
+    @Column(name = "telefene", length = 20)
+    private String telefene;
 
-    @Column(name = "endereco", length = 255, nullable = false)
+    @Size(max = 255)
+    @NotNull
+    @Column(name = "endereco", nullable = false)
     private String endereco;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_cadastro")
-    private Date data_cadastro;
+    private Instant dataCadastro;
 
-    public int getId_tarefa() {
-        return id_tarefa;
-    }
-
-    public void setId_tarefa(int id_tarefa) {
-        this.id_tarefa = id_tarefa;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public Date getData_cadastro() {
-        return data_cadastro;
-    }
-
-    public void setData_cadastro(Date data_cadastro) {
-        this.data_cadastro = data_cadastro;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id_tarefa=" + id_tarefa +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", data_cadastro=" + data_cadastro +
-                '}';
-    }
 }

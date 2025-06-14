@@ -1,4 +1,4 @@
-package br.com.opon.opon_api.entities;
+package br.com.opon.opon_api.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

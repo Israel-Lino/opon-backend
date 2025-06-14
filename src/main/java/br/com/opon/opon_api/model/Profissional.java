@@ -1,6 +1,7 @@
-package br.com.opon.opon_api.entities;
+package br.com.opon.opon_api.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -28,6 +30,7 @@ public class Profissional {
 
     @Size(max = 255)
     @NotNull
+    @Email
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -52,7 +55,7 @@ public class Profissional {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_cadastro")
-    private Instant dataCadastro;
+    private LocalDateTime dataCadastro;
 
     @ColumnDefault("1.0")
     @Column(name = "avaliacao", precision = 2, scale = 1)

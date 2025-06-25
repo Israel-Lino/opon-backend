@@ -3,5 +3,8 @@ package br.com.opon.opon_api.repository;
 import br.com.opon.opon_api.model.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ICliente extends JpaRepository<Cliente, String> {
+import java.util.Optional;
+
+public interface ICliente extends JpaRepository<Cliente, Integer> {
+    Boolean existsByEmail(String email);
 }

@@ -1,5 +1,6 @@
 package br.com.opon.opon_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -9,9 +10,9 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
 @Entity
@@ -20,28 +21,29 @@ import java.time.LocalDateTime;
 })
 public class Profissional {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_profissional", nullable = false)
-    private Integer id;
+    private Integer idProfissional;
 
     @Size(max = 100)
     @NotNull
     @Column(name = "nome", nullable = false, length = 100)
     private String nome;
 
-    @Size(max = 255)
-    @NotNull
+    @Size(max = 100)
     @Email
-    @Column(name = "email", nullable = false)
+    @NotNull
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
 
-    @Size(max = 255)
+    @Size(max = 100)
     @NotNull
     @Column(name = "senha", nullable = false)
     private String senha;
 
     @Size(max = 20)
-    @Column(name = "telefene", length = 20)
-    private String telefene;
+    @Column(name = "telefone", length = 20)
+    private String telefone;
 
     @Size(max = 255)
     @NotNull

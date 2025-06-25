@@ -13,36 +13,38 @@ import java.util.List;
 @RequestMapping("/profissional")
 public class ProfissionalController {
 
+
     private final ProfissionalService profissionalService;
 
-    public ProfissionalController(ProfissionalService profissionalService) {
+    public ProfissionalController(ProfissionalService profissionalService){
         this.profissionalService = profissionalService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Profissional>> listarProfissionais() {
-        return ResponseEntity.status(200).body(profissionalService.listarProfissionais());
+    public ResponseEntity<List<Profissional>> listarProfissionais(){
+        return ResponseEntity.ok(profissionalService.listarProfissionais());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Profissional> buscarProfissionalID(@PathVariable Integer id) {
-        return ResponseEntity.ok(profissionalService.buscarProfissionalID(id));
+    public ResponseEntity<Profissional> buscarProfissional(@PathVariable Integer id){
+        return ResponseEntity.ok(profissionalService.buscarProfissional(id));
     }
 
     @PostMapping
-    public ResponseEntity<Profissional> cadastrarProfissional(@RequestBody Profissional profissional) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.profissionalService.criarProfissional(profissional));
+    public ResponseEntity<Profissional> cadastrarProfissional(@RequestBody Profissional profissional){
+        return ResponseEntity.status(HttpStatus.CREATED).body(profissionalService.criarProfissional(profissional));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Profissional> editarProfissional(@PathVariable Integer id, @RequestBody Profissional profissional) {
-        profissional.setId(id);
-        return ResponseEntity.ok(profissionalService.editarProfissional(id, profissional));
+    public ResponseEntity<Profissional> editarProfissional(@RequestBody Profissional profissional, @PathVariable Integer id) {
+        profissional.setIdProfissional(id);
+        return ResponseEntity.ok(profissionalService.editarProfissional(profissional, id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Profissional> deletarProfissional(@PathVariable Integer id) {
-        profissionalService.deletarProfissional(id);
+    public ResponseEntity<Boolean> deletarProfissional(@PathVariable Integer id){
+        profissionalService.excluirProfissional(id);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
 }

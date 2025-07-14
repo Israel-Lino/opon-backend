@@ -1,5 +1,6 @@
 package br.com.opon.opon_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,12 +11,14 @@ import org.hibernate.annotations.ColumnDefault;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
 @Entity
 @Table(name = "avaliacao")
 public class Avaliacao {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_avaliacao", nullable = false)
     private Integer id_avaliacao;
 
@@ -34,16 +37,16 @@ public class Avaliacao {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_servico", nullable = false)
-    private br.com.opon.opon_api.model.Servico fkServico;
+    private Servico fkServico;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_cliente", nullable = false)
-    private br.com.opon.opon_api.model.Cliente fkCliente;
+    private Cliente fkCliente;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_profissional", nullable = false)
-    private br.com.opon.opon_api.model.Profissional fkProfissional;
+    private Profissional fkProfissional;
 
 }

@@ -4,7 +4,9 @@ package br.com.opon.opon_api.service;
 import br.com.opon.opon_api.exceptions.EmailJaCadastradoException;
 import br.com.opon.opon_api.exceptions.ProfissionalNaoEncontradoException;
 import br.com.opon.opon_api.model.Profissional;
+import br.com.opon.opon_api.repository.IAvaliacao;
 import br.com.opon.opon_api.repository.IProfissional;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,13 +15,10 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProfissionalService {
 
     private final IProfissional repository;
-
-    public ProfissionalService(IProfissional repository){
-        this.repository = repository;
-    }
 
     public List<Profissional> listarProfissionais(){
         return repository.findAll();
@@ -41,14 +40,16 @@ public class ProfissionalService {
         profissionalAtual.setNome(profissionalEditado.getNome());
         profissionalAtual.setTelefone(profissionalEditado.getTelefone());
         profissionalAtual.setEndereco(profissionalEditado.getEndereco());
+        profissionalAtual.setEspecializacao(profissionalEditado.getEspecializacao());
         return repository.save(profissionalAtual);
     }
 
-    public void excluirProfissional(Integer id){
+    public Boolean excluirProfissional(Integer id){
         if(!repository.existsById(id)){
             throw new ProfissionalNaoEncontradoException("Profissional não encontrado. Id:" + id + " /Service");
         }
         repository.deleteById(id);
+        return true;
     }
 
     //Todo adicionar método para aumentar a avaliação do profissional

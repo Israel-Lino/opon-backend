@@ -36,17 +36,18 @@ public class ServicoService {
 
     public Servico criarServico(ServicoDTO servicoDto) {
         Servico servico = new Servico();
-        Cliente cliente = clienteService.buscarCliente(servicoDto.getFk_cliente());
+        Cliente cliente = clienteService.buscarCliente(servicoDto.getFkCliente());
 
         servico.setTitulo(servicoDto.getTitulo());
         servico.setDescricao(servicoDto.getDescricao());
         servico.setCategoria(servicoDto.getCategoria());
-        servico.setStatusServico("Pendente");
+        //Todo Concertar status para receber o valor do DTO
+        servico.setStatusServico("Aceito");
         servico.setDataSolicitada(dataAtual());
         //Todo adicionar método para dataConclusão
         servico.setFkCliente(cliente);
-        if (servicoDto.getFk_profissional() != 0) {
-            Profissional profissional = profissionalService.buscarProfissional(servicoDto.getFk_profissional());
+        if (servicoDto.getFkProfissional() != 0) {
+            Profissional profissional = profissionalService.buscarProfissional(servicoDto.getFkProfissional());
             servico.setFkProfissional(profissional);
         }
         return repository.save(servico);
@@ -58,6 +59,7 @@ public class ServicoService {
         servicoAtual.setDescricao(servicoDtoEditado.getDescricao());
         servicoAtual.setCategoria(servicoDtoEditado.getCategoria());
         //Todo aqui ficará o método para alterar o Status
+        //Todo adicionar metodo para adicionar o profissional
         return repository.save(servicoAtual);
     }
 

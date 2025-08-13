@@ -13,8 +13,8 @@ public class ServicoDTO {
     private String descricao;
     private String categoria;
     private String status;
-    private int fk_cliente;
-    private int fk_profissional;
+    private int fkCliente;
+    private int fkProfissional;
     private LocalDateTime dataSolicitada;
     private LocalDateTime dataConclusao;
 

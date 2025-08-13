@@ -2,6 +2,11 @@
 
 API desenvolvida em Java com Spring Boot para gerenciamento de solicitações de serviços entre clientes e operários.
 
+
+## Acesso ao sistema - Localhost
+
+- **Swagger UI:** [Documentação Interativa](http://localhost:8080/swagger-ui/index.html)
+
 ## 🔧 Tecnologias Utilizadas
 
 - Java 17

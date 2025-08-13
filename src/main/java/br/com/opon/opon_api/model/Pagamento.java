@@ -1,5 +1,6 @@
 package br.com.opon.opon_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Getter
 @Setter
 @Entity
@@ -41,7 +43,7 @@ public class Pagamento {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_servico", nullable = false)
-    private br.com.opon.opon_api.model.Servico fkServico;
+    private Servico fkServico;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -51,6 +53,6 @@ public class Pagamento {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_profissional", nullable = false)
-    private br.com.opon.opon_api.model.Profissional fkProfissional;
+    private Profissional fkProfissional;
 
 }

@@ -1,5 +1,6 @@
 package br.com.opon.opon_api.controller;
 
+import br.com.opon.opon_api.model.Cliente;
 import br.com.opon.opon_api.model.Profissional;
 import br.com.opon.opon_api.service.ProfissionalService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,6 +32,12 @@ public class ProfissionalController {
     @GetMapping("/{id}")
     public ResponseEntity<Profissional> buscarProfissional(@PathVariable Integer id){
         return ResponseEntity.ok(profissionalService.buscarProfissional(id));
+    }
+
+    @ApiResponse(responseCode = "200", description = "Verifica se o profissional existe no banco")
+    @PostMapping("/validar")
+    public ResponseEntity<Profissional> validarCliente(@RequestBody Profissional profissional) {
+        return ResponseEntity.ok(profissionalService.validarProfissional(profissional));
     }
 
     @ApiResponse(responseCode = "201", description = "Cadastra um novo Profissional")

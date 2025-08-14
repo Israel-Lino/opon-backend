@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Data
@@ -33,6 +34,10 @@ public class ClienteService {
         validarEmailCliente(cliente.getEmail());
         cliente.setDataCadastro(dataAtual());
         return repository.save(cliente);
+    }
+
+    public Cliente validarCliente(Cliente cliente){
+        return repository.findByEmail(cliente.getEmail()).orElseThrow(() -> new RuntimeException("Usuário não encontrado no banco"));
     }
 
     public Cliente editarCliente(Cliente clienteEditado, Integer id) {

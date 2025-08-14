@@ -32,6 +32,12 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.buscarCliente(id));
     }
 
+    @ApiResponse(responseCode = "200", description = "Verifica se o cliente existe no banco")
+    @PostMapping("/validar")
+    public ResponseEntity<Cliente> validarCliente(@RequestBody Cliente cliente) {
+        return ResponseEntity.ok(clienteService.validarCliente(cliente));
+    }
+
     @ApiResponse(responseCode = "201", description = "Cadastra um novo Cliente")
     @PostMapping
     public ResponseEntity<Cliente> cadastrarCliente(@RequestBody Cliente cliente) {

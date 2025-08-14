@@ -3,6 +3,7 @@ package br.com.opon.opon_api.service;
 
 import br.com.opon.opon_api.exceptions.EmailJaCadastradoException;
 import br.com.opon.opon_api.exceptions.ProfissionalNaoEncontradoException;
+import br.com.opon.opon_api.model.Cliente;
 import br.com.opon.opon_api.model.Profissional;
 import br.com.opon.opon_api.repository.IAvaliacao;
 import br.com.opon.opon_api.repository.IProfissional;
@@ -33,6 +34,10 @@ public class ProfissionalService {
         profissional.setDataCadastro(dataAtual());
         profissional.setAvaliacao(new BigDecimal("1.0"));
         return repository.save(profissional);
+    }
+
+    public Profissional validarProfissional(Profissional profissional){
+        return repository.findByEmail(profissional.getEmail()).orElseThrow(() -> new RuntimeException("Usuário não encontrado no banco"));
     }
 
     public Profissional editarProfissional (Profissional profissionalEditado, Integer id){

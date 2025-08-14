@@ -1,13 +1,12 @@
 package br.com.opon.opon_api.model;
 
+import br.com.opon.opon_api.model.enums.MetodoPagamento;
+import br.com.opon.opon_api.model.enums.StatusPagamento;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.metamodel.model.domain.IdentifiableDomainType;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -27,15 +26,14 @@ public class Pagamento {
     private BigDecimal valorPagamento;
 
     @NotNull
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "metodo", nullable = false)
-    private String metodoPagamento;
+    private MetodoPagamento metodoPagamento;
 
     @NotNull
-    @ColumnDefault("(_utf8mb4'Pendente')")
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private String statusPagamento;
+    private StatusPagamento statusPagamento;
 
     @Column(name = "data_pagamento")
     private LocalDateTime dataPagamento;
@@ -55,4 +53,10 @@ public class Pagamento {
     @JoinColumn(name = "fk_profissional", nullable = false)
     private Profissional fkProfissional;
 
+    @PrePersist
+    protected void onCreate() {
+        if(this.statusPagamento == null) {
+            this.statusPagamento = StatusPagamento.Pendente;
+        }
+    }
 }

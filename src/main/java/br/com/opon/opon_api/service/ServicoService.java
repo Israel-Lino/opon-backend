@@ -6,6 +6,8 @@ import br.com.opon.opon_api.exceptions.ServicoNaoEncontrado;
 import br.com.opon.opon_api.model.Cliente;
 import br.com.opon.opon_api.model.Profissional;
 import br.com.opon.opon_api.model.Servico;
+import br.com.opon.opon_api.model.enums.CategoriaServico;
+import br.com.opon.opon_api.model.enums.StatusServico;
 import br.com.opon.opon_api.repository.IServico;
 import org.springframework.stereotype.Service;
 
@@ -40,9 +42,10 @@ public class ServicoService {
 
         servico.setTitulo(servicoDto.getTitulo());
         servico.setDescricao(servicoDto.getDescricao());
-        servico.setCategoria(servicoDto.getCategoria());
+        CategoriaServico categoria = CategoriaServico.valueOf(servicoDto.getCategoria());
         //Todo Concertar status para receber o valor do DTO
-        servico.setStatusServico("Aceito");
+        servico.setCategoria(categoria);
+        servico.setStatusServico(StatusServico.Aceito);
         servico.setDataSolicitada(dataAtual());
         //Todo adicionar método para dataConclusão
         servico.setFkCliente(cliente);
@@ -57,7 +60,8 @@ public class ServicoService {
         Servico servicoAtual = repository.findById(id).orElseThrow(() -> new ServicoNaoEncontrado("Serviço não encontrado. Id:" + id + " /Service"));
         servicoAtual.setTitulo(servicoDtoEditado.getTitulo());
         servicoAtual.setDescricao(servicoDtoEditado.getDescricao());
-        servicoAtual.setCategoria(servicoDtoEditado.getCategoria());
+        CategoriaServico categoria = CategoriaServico.valueOf(servicoDtoEditado.getCategoria());
+        servicoAtual.setCategoria(categoria);
         //Todo aqui ficará o método para alterar o Status
         //Todo adicionar metodo para adicionar o profissional
         return repository.save(servicoAtual);

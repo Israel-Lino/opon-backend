@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -22,7 +20,6 @@ public class Avaliacao {
     @Column(name = "id_avaliacao", nullable = false)
     private Integer id_avaliacao;
 
-    @ColumnDefault("1.0")
     @Column(name = "nota", precision = 2, scale = 1)
     private BigDecimal nota;
 
@@ -30,7 +27,6 @@ public class Avaliacao {
     @Column(name = "comentario", length = 500)
     private String comentario;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "data_avaliacao")
     private LocalDateTime dataAvaliacao;
 
@@ -48,5 +44,13 @@ public class Avaliacao {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "fk_profissional", nullable = false)
     private Profissional fkProfissional;
+
+    @PrePersist
+    protected void onCreate() {
+        this.dataAvaliacao = LocalDateTime.now();
+        if (this.nota == null) {
+            this.nota = new BigDecimal("1.0");
+        }
+    }
 
 }

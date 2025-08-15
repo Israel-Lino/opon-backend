@@ -70,10 +70,23 @@ public class ServicoService {
         Servico servicoAtual = repository.findById(id).orElseThrow(() -> new ServicoNaoEncontrado("Serviço não encontrado. Id:" + id + " /Service"));
         servicoAtual.setTitulo(servicoDtoEditado.getTitulo());
         servicoAtual.setDescricao(servicoDtoEditado.getDescricao());
-        CategoriaServico categoria = CategoriaServico.valueOf(servicoDtoEditado.getCategoria());
-        servicoAtual.setCategoria(categoria);
+
+        if(servicoDtoEditado.getCategoria() != null){
+            CategoriaServico categoria = CategoriaServico.valueOf(servicoDtoEditado.getCategoria());
+            servicoAtual.setCategoria(categoria);
+        }
         //Todo aqui ficará o método para alterar o Status
-        //Todo adicionar metodo para adicionar o profissional
+        if (servicoDtoEditado.getStatusServico() != null) {
+            StatusServico statusServico = StatusServico.valueOf(servicoDtoEditado.getStatusServico());
+            servicoAtual.setStatusServico(statusServico);
+        }
+
+        //Todo adicionar metodo para adicionar o profissional*/
+        if (servicoDtoEditado.getFkProfissional() != null && servicoDtoEditado.getFkProfissional() != 0) {
+            Profissional profissional = profissionalService.buscarProfissional(servicoDtoEditado.getFkProfissional());
+            servicoAtual.setFkProfissional(profissional);
+        }
+
         return repository.save(servicoAtual);
     }
 

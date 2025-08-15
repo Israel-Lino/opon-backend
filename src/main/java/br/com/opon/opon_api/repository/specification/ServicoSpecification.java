@@ -9,7 +9,7 @@ public class ServicoSpecification {
 
     public static Specification<Servico> porStatus(StatusServico status){
         return(root, query, criteriaBiulder) ->
-                criteriaBiulder.equal(root.get("status"), status);
+                criteriaBiulder.equal(root.get("statusServico"), status);
     }
 
     public static Specification<Servico> porCategoria(CategoriaServico categoria){

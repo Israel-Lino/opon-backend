@@ -2,6 +2,8 @@ package br.com.opon.opon_api.controller;
 
 import br.com.opon.opon_api.dto.ServicoDTO;
 import br.com.opon.opon_api.model.Servico;
+import br.com.opon.opon_api.model.enums.CategoriaServico;
+import br.com.opon.opon_api.model.enums.StatusServico;
 import br.com.opon.opon_api.service.ServicoService;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpStatus;
@@ -23,8 +25,13 @@ public class ServicoController {
 
     @ApiResponse(responseCode = "200", description = "Retorna uma lista com todos os Servicos")
     @GetMapping
-    public ResponseEntity<List<Servico>> listarServicos(){
-        return ResponseEntity.ok(servicoService.listarServicos());
+    public ResponseEntity<List<Servico>> listarServicos(
+            @RequestParam(required = false)StatusServico status,
+            @RequestParam(required = false)CategoriaServico categora,
+            @RequestParam(required = false)Integer idCliente
+            ){
+        List<Servico> servicos = servicoService.buscarServicoFiltrados(status, categora, idCliente);
+        return ResponseEntity.ok(servicos);
     }
 
     @ApiResponse(responseCode = "200", description = "Retorna um Servico pelo ID")

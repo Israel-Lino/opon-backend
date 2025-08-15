@@ -37,6 +37,10 @@ public class Servico {
     @Column(name = "categoria", nullable = false)
     private CategoriaServico categoria;
 
+    @Size(max = 255)
+    @Column(name = "endereco")
+    private String endereco;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)

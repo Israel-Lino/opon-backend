@@ -9,11 +9,13 @@ import br.com.opon.opon_api.model.Servico;
 import br.com.opon.opon_api.model.enums.CategoriaServico;
 import br.com.opon.opon_api.model.enums.StatusServico;
 import br.com.opon.opon_api.repository.IServico;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import static br.com.opon.opon_api.repository.specification.ServicoSpecification.*;
 
 @Service
 public class ServicoService {
@@ -54,6 +56,14 @@ public class ServicoService {
             servico.setFkProfissional(profissional);
         }
         return repository.save(servico);
+    }
+
+    public List<Servico> buscarServicoFiltrados(StatusServico status, CategoriaServico categoria, Integer idCliente) {
+        Specification<Servico> spec = Specification.where(null);
+        if (status != null) spec = spec.and(porStatus(status));
+        if (categoria != null) spec = spec.and(porCategoria(categoria));
+        if (idCliente != null) spec = spec.and(porClienteId(idCliente));
+        return repository.findAll(spec);
     }
 
     public Servico editarServico(ServicoDTO servicoDtoEditado, Integer id) {
